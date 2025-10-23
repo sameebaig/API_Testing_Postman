@@ -1,1 +1,543 @@
-
+{
+	"info": {
+		"_postman_id": "9231fbe3-51b1-4788-9732-7cbdb87d99c2",
+		"name": "ReqRes_Env",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47876473"
+	},
+	"item": [
+		{
+			"name": "Create new User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let res = pm.response.json();\r",
+							"pm.environment.set(\"userId\", res.id);\r",
+							"pm.test(\"Status code is 201\", () => pm.response.to.have.status(201));\r",
+							"pm.test(\"User ID saved\", () => pm.expect(res.id).to.not.be.undefined);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{token}}",
+						"description": "API key for authentication"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}\r\n\r\n//register, login, create new user,\r\n//get user, ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{token}}",
+						"description": "API key for authentication"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let res = pm.response.json();\r",
+							"pm.environment.set(\"token\", res.token);\r",
+							"pm.test(\"Login successful\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Token received\", () => pm.expect(res.token).to.not.be.undefined);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{token}}",
+						"description": "API key for authentication"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Has users list\", () => {\r",
+							"  let json = pm.response.json();\r",
+							"  pm.expect(json.data.length).to.be.above(0);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users?page=2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Created User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"User data fetched\", () => {\r",
+							"  let json = pm.response.json();\r",
+							"  pm.expect(json.data).to.have.property(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delayed Response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delayed response works\", () => pm.response.to.have.status(200));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users?delay=3",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "delay",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User not found\", () => pm.response.to.have.status(404));"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{UserId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{UserId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Job updated\", () => {\r",
+							"  let res = pm.response.json();\r",
+							"  pm.expect(res.job).to.eql(\"zion resident\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Updated successfully\", () => {\r",
+							"  let res = pm.response.json();\r",
+							"  pm.expect(res.job).to.eql(\"team leader\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"job\": \"team leader\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Deleted successfully\", () => pm.response.to.have.status(204));"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "reqres-free-v1",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
