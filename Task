@@ -1,0 +1,10 @@
+Task: Automation
+
+Automate 10 APIs on Postman (please scroll down at the bottom to see the link with APIs). The APIs must be correlated (chaining) and each API must have at least one assertion. Create a monitor to schedule the running of API collections daily.
+checklist:-
+Postman variables (environment & collections variables)
+Pre-req scripts
+Assertions/Tests
+Chaining requests
+Collection runners
+Postman Monitors
